@@ -16,30 +16,20 @@ const entradaDados = readline.createInterface({
 })
 
 entradaDados.question('Digite o seu peso atual: ', function(peso){
-    let pesoInforme = peso
+    let pesoInforme = tratamento.tratandoNomes(peso)
 
     entradaDados.question('Digite a sua altura: ', function(altura){
-        let alturaInforme = altura
+        let alturaInforme = tratamento.tratandoNomes(altura)
+
+        if(alturaInforme == false || pesoInforme == false){
+            entradaDados.close()
+        }
 
         let resultado = calcular.calcularImc(alturaInforme, pesoInforme)
     
-        console.log('***Calculo*** ***Imc***')
-        
         console.log('O seu peso atual é ' + resultado)
+        console.log
 
-        if( resultado < 18.5 ){
-            console.log('abaixo do peso')
-        }else if(resultado >= 18.5 && resultado < 24.9){
-            console.log('peso normal')
-        }else if(resultado >= 25 && resultado < 29.9 ){
-            console.log('acima do peso (sobrepeso)')
-        }else if(resultado >= 30 && resultado < 34.9){
-            console.log('obesidade 1')
-        }else if(resultado >= 35 && resultado < 39.9){
-            console.log('obesidade 2')
-        }else if(resultado > 40){
-            console.log('obesidade 3')
-        }
+        
     })
-
 })
