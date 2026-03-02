@@ -16,20 +16,19 @@ const entradaDados = readline.createInterface({
 })
 
 entradaDados.question('Digite o seu peso atual: ', function(peso){
-    let pesoInforme = tratamento.tratandoNomes(peso)
+    let pesoInforme = peso
 
-    entradaDados.question('Digite a sua altura: ', function(altura){
-        let alturaInforme = tratamento.tratandoNomes(altura)
+    entradaDados.question('Digite a sua altura: ', function (altura){
+        let alturaInforme = altura
 
-        if(alturaInforme == false || pesoInforme == false){
-            entradaDados.close()
+        let validar = tratamento.tratandoNomes(alturaInforme, pesoInforme)
+
+        if (!validar) {
+            console.log('Erro: Valores de peso ou altura estão incorretos!!!') 
+            return false
         }
 
         let resultado = calcular.calcularImc(alturaInforme, pesoInforme)
-    
         console.log('O seu peso atual é ' + resultado)
-        console.log
-
-        
     })
 })
