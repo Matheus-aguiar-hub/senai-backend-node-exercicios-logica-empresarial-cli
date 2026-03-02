@@ -24,7 +24,7 @@ entradaDados.question('Digite o seu peso atual: ', function(peso){
         let validar = tratamento.tratandoNomes(alturaInforme, pesoInforme)
 
         if (!validar) {
-            console.log('Erro: Valores de peso ou altura estão incorretos!!!') 
+            entradaDados.close()
             return false
         }
 

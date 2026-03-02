@@ -1,5 +1,13 @@
 function tratandoNomes(peso, altura) {
-    if (peso == "" || isNaN(peso) || altura == "" || isNaN(altura)) return false
+    if (peso == "" || altura == ""  ) {
+    console.log('ERRO: Campo está vazio!!!')
+    return false
+    }
+
+    else if  (isNaN(peso) || isNaN(altura)) {
+    console.log('ERRO: Informe um número!!!')
+    return false
+    }
 
     else return true
 
