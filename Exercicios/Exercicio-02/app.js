@@ -37,13 +37,13 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                             let notaAluno1 = Number(nota1)
 
                             entradaDados.question('Digite o valor da segunda nota: ', function (nota2) {
-                                let notaAluno2 = nota2
+                                let notaAluno2 = Number(nota2)
 
                                 entradaDados.question('Digite o valor da terceira nota: ', function (nota3) {
-                                    let notaAluno3 = nota3
+                                    let notaAluno3 = Number(nota3)
 
                                     entradaDados.question('Digite o valor da quarta nota: ', function (nota4) {
-                                        let notaAluno4 = nota4
+                                        let notaAluno4 = Number(nota4)
 
                                         let validando = tratamento.tratamentoValorMinMax(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
                                         let validandoVazio = tratamento.tratamentoVazio(nomeAluno, nomeProfessor, sexoProfessor, SexoAluno, nomeCurso, nomeDisciplina)
@@ -58,8 +58,9 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
 
                                         let situacao = ''
 
-                                        if (mediaFinal > 50 && mediaFinal < 69) {
-                                            console.log('Recuperação')
+                                        if (mediaFinal >= 50 && mediaFinal < 70) {
+                                            console.log('Aluno em recuperação')
+                                            situacao = 'Recuperação'
                                             notasExame(mediaFinal,
                                                 nomeAluno,
                                                 nomeDisciplina,
@@ -72,7 +73,7 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                             return
                                         }
 
-                                        else if (mediaFinal > 70) {
+                                        else if (mediaFinal >= 70) {
                                             situacao = 'Aprovado'
                                         }
 
@@ -120,11 +121,15 @@ const notasExame = (mediaFinal,
     entradaDados.question('Digite o valor da primeira nota do exame: ', function (notaExa) {
         let notaExame = Number(notaExa)
 
-        let mediaExame = calculo.mediaExame(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
+        let mediaExame = calculo.mediaExame(notaExame, mediaFinal)
 
-        let situacaoFinal = mediaExame > 60
-            ? 'Aprovado em exame'
-            : 'Reprovado em exame'
+        let situacaoFinal
+
+        if (mediaExame > 60) {
+            situacaoFinal = 'Aprovado em exame'
+        } else {
+            situacaoFinal = 'Reprovado em exame'
+        }
 
         gerarRelatorio(
             nomeAluno,
@@ -176,7 +181,7 @@ Nota 4: ${nota4}
 Nota do Exame: ${notaExame ?? "Não realizou"}
 
 Média Final: ${mediaFinal.toFixed(2)}
-Média Final do Exame: ${mediaExame ? mediaExame.toFixed(2) : "Não aplicável"}
+Média Final do Exame: ${mediaExame.toFixed(2) ?? "Não aplicável"}
 
 Situação: ${situacao}
 ----------------------------------------
