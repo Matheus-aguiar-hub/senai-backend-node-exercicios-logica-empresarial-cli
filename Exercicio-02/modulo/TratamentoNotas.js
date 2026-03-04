@@ -27,7 +27,6 @@ function tratamentoVazio(nomeAluno, nomeProfessor, sexoProfessor, SexoAluno, nom
     }
 }
 
-
 module.exports = {
     tratamentoValorMinMax,
     tratamentoVazio
