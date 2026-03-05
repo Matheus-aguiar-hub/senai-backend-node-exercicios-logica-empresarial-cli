@@ -16,22 +16,22 @@ const entradaDados = readline.createInterface({
 })
 
 entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
-    let nomeAluno = nomeAlunos
+    let nomeAluno = nomeAlunos.toUpperCase()
 
     entradaDados.question('Digite o nome do professor: ', function (nomeProfessores) {
-        let nomeProfessor = nomeProfessores
+        let nomeProfessor = nomeProfessores.toUpperCase()
 
-        entradaDados.question('Digite o sexo do professor: ', function (SexoProfessores) {
-            let sexoProfessor = SexoProfessores
+        entradaDados.question('Digite o sexo do professor: ', function (sexoProfessores) {
+            let sexoProfessor = sexoProfessores.toUpperCase()
 
-            entradaDados.question('Digite o sexo do aluno: ', function (SexoAlunos) {
-                let SexoAluno = SexoAlunos
+            entradaDados.question('Digite o sexo do aluno: ', function (sexoAlunos) {
+                let sexoAluno = sexoAlunos.toUpperCase()
 
                 entradaDados.question('Digite o nome do curso: ', function (nomeCursos) {
-                    let nomeCurso = nomeCursos
+                    let nomeCurso = nomeCursos.toUpperCase()
 
                     entradaDados.question('Digite o nome da disciplina: ', function (nomeDisciplinas) {
-                        let nomeDisciplina = nomeDisciplinas
+                        let nomeDisciplina = nomeDisciplinas.toUpperCase()
 
                         entradaDados.question('Digite o valor da primeira nota: ', function (nota1) {
                             let notaAluno1 = Number(nota1)
@@ -46,7 +46,7 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                         let notaAluno4 = Number(nota4)
 
                                         let validando = tratamento.tratamentoValorMinMax(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
-                                        let validandoVazio = tratamento.tratamentoVazio(nomeAluno, nomeProfessor, sexoProfessor, SexoAluno, nomeCurso, nomeDisciplina)
+                                        let validandoVazio = tratamento.tratamentoVazio(nomeAluno, nomeProfessor, sexoProfessor, sexoAluno, nomeCurso, nomeDisciplina)
 
                                         if (!validando && !validandoVazio) {
                                             console.log('Erro')
@@ -56,20 +56,36 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
 
                                         let mediaFinal = calculo.calculoMedia(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
 
+                                        if (sexoProfessor === 'FEMININO') {
+                                            sexoProfessor = 'Professora'
+                                        } else {
+                                            sexoProfessor = 'Professor'
+                                        }
+                                        if (sexoAluno === 'FEMININO') {
+                                            sexoAluno = 'Aluna'
+                                        } else {
+                                            sexoAluno = 'Aluno'
+                                        }
+
                                         let situacao = ''
 
                                         if (mediaFinal >= 50 && mediaFinal < 70) {
                                             console.log('Aluno em recuperação')
                                             situacao = 'Recuperação'
-                                            notasExame(mediaFinal,
+                                            notasExame(sexoAluno,
                                                 nomeAluno,
                                                 nomeDisciplina,
                                                 nomeCurso,
+                                                sexoProfessor,
                                                 nomeProfessor,
                                                 notaAluno1,
                                                 notaAluno2,
                                                 notaAluno3,
-                                                notaAluno4)
+                                                notaAluno4,
+                                                null,
+                                                mediaFinal,
+                                                null,
+                                                situacao)
                                             return
                                         }
 
@@ -81,9 +97,11 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                             situacao = 'Reprovado'
                                         }
                                         gerarRelatorio(
+                                            sexoAluno,
                                             nomeAluno,
                                             nomeDisciplina,
                                             nomeCurso,
+                                            sexoProfessor,
                                             nomeProfessor,
                                             notaAluno1,
                                             notaAluno2,
@@ -151,10 +169,12 @@ const notasExame = (mediaFinal,
 }
 
 const gerarRelatorio = (
-    nome,
+    sexoAluno,
+    nomeAluno,
     disciplina,
     curso,
-    professor,
+    sexoProfessor,
+    nomeProfessor,
     nota1,
     nota2,
     nota3,
@@ -168,10 +188,10 @@ const gerarRelatorio = (
     console.log(`
          RELATÓRIO DO ALUNO
 ----------------------------------------
-Aluno: ${nome}
+${sexoAluno}: ${nomeAluno}
 Disciplina: ${disciplina}
 Curso: ${curso}
-Professor: ${professor}
+${sexoProfessor} : ${nomeProfessor}
 
 Notas:
 Nota 1: ${nota1}
@@ -181,7 +201,7 @@ Nota 4: ${nota4}
 Nota do Exame: ${notaExame ?? "Não realizou"}
 
 Média Final: ${mediaFinal.toFixed(2)}
-Média Final do Exame: ${mediaExame.toFixed(2) ?? "Não aplicável"}
+Média Final do Exame: ${mediaExame?.toFixed(2) ?? "Não aplicável"}
 
 Situação: ${situacao}
 ----------------------------------------
