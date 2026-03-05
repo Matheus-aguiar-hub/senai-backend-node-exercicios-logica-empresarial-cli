@@ -45,17 +45,19 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                     entradaDados.question('Digite o valor da quarta nota: ', function (nota4) {
                                         let notaAluno4 = Number(nota4)
 
+                                        //Chamando funções valor minimo e máximo, vazio e o calculo da média
                                         let validando = tratamento.tratamentoValorMinMax(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
                                         let validandoVazio = tratamento.tratamentoVazio(nomeAluno, nomeProfessor, sexoProfessor, sexoAluno, nomeCurso, nomeDisciplina)
+                                        let mediaFinal = calculo.calculoMedia(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
 
+                                        //Validando número minimo e número máximo, caso der false consquentemente vai dar erro
                                         if (!validando && !validandoVazio) {
                                             console.log('Erro')
                                             entradaDados.close()
                                             return false
                                         }
 
-                                        let mediaFinal = calculo.calculoMedia(notaAluno1, notaAluno2, notaAluno3, notaAluno4)
-
+                                        //Fazendo o tratamento fo genero feminino condizente com professora e aluna
                                         if (sexoProfessor === 'FEMININO') {
                                             sexoProfessor = 'Professora'
                                         } else {
@@ -67,11 +69,13 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                             sexoAluno = 'Aluno'
                                         }
 
+                                        //Criando uma váriavel para a situação de aprovado, reprovado e recuperação
                                         let situacao = ''
 
                                         if (mediaFinal >= 50 && mediaFinal < 70) {
                                             console.log('Aluno em recuperação')
                                             situacao = 'Recuperação'
+                                            //Definindo todos os 14 parâmetros (Null serve para definir a váriavel caso o aluno não faça o exame)
                                             notasExame(sexoAluno,
                                                 nomeAluno,
                                                 nomeDisciplina,
@@ -86,6 +90,7 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                                 mediaFinal,
                                                 null,
                                                 situacao)
+                                            //Encerrando o callback
                                             return
                                         }
 
@@ -96,8 +101,8 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
                                         else if (mediaFinal < 50) {
                                             situacao = 'Reprovado'
                                         }
-                                        gerarRelatorio(
-                                            sexoAluno,
+                                        //Definindo todos os 14 parâmetros (Null serve para definir a váriavel caso o aluno não faça o exame) caso for aprovado ou reprovado vai ir para está função
+                                        gerarRelatorio(sexoAluno,
                                             nomeAluno,
                                             nomeDisciplina,
                                             nomeCurso,
@@ -125,7 +130,7 @@ entradaDados.question('Digite o nome do aluno: ', function (nomeAlunos) {
         })
     })
 })
-
+//Função das notas do exame com 9 parâmetros
 const notasExame = (mediaFinal,
     nomeAluno,
     nomeDisciplina,
@@ -138,7 +143,7 @@ const notasExame = (mediaFinal,
 
     entradaDados.question('Digite o valor da primeira nota do exame: ', function (notaExa) {
         let notaExame = Number(notaExa)
-
+        //Chamando o calculo
         let mediaExame = calculo.mediaExame(notaExame, mediaFinal)
 
         let situacaoFinal
@@ -148,7 +153,7 @@ const notasExame = (mediaFinal,
         } else {
             situacaoFinal = 'Reprovado em exame'
         }
-
+        //Definindo todos os 14 parâmetros 
         gerarRelatorio(
             nomeAluno,
             nomeDisciplina,
@@ -167,9 +172,8 @@ const notasExame = (mediaFinal,
         entradaDados.close()
     })
 }
-
-const gerarRelatorio = (
-    sexoAluno,
+ //Definindo todos os 14 parâmetros 
+const gerarRelatorio = (sexoAluno,
     nomeAluno,
     disciplina,
     curso,
@@ -184,11 +188,14 @@ const gerarRelatorio = (
     mediaExame,
     situacao
 ) => {
-
+ //Fazendo o relatorio do aluno conforme o escopo com a definição de genêro do aluno(a) e professor(a),
+ // ?? serve para definir caso o valor da esquerda for nulo ou undefined será executado o da direita
+ // Caso o valor não existir ou fou nulo ele executara o da direita 
+ // A situação foi definido como "" para que ela atenda a váriavel e a aprovação será formatado
     console.log(`
          RELATÓRIO DO ALUNO
 ----------------------------------------
-${sexoAluno}: ${nomeAluno}
+${sexoAluno} : ${nomeAluno}
 Disciplina: ${disciplina}
 Curso: ${curso}
 ${sexoProfessor} : ${nomeProfessor}
