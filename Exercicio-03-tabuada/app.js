@@ -20,8 +20,13 @@ entradaDados.question('Digite a tabuada inicial: ', function(tabuadaInicial){
     entradaDados.question('Digite a tabuada final: ', function(tabuadaFinal){
         let tabuadaFim = tabuadaFinal
 
+        if(tabuadaFim > 100){
+            console.log('erro')
+            return false
+        }
 
-        let gerandoTabuada = gerarTabuada.gerandoTabuadaIncial(tabuadaComeco, tabuadaFim)
+
+        let gerandoTabuada = gerarTabuada.gerandoTabuadaIncial(tabuadaInicial, tabuadaFinal)
  
         })
     })
