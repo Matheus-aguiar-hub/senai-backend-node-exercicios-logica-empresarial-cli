@@ -24,7 +24,9 @@ entradaDados.question('Digite o número inicial: ', function (primeiroNumero){
 
         const validar = tratamento.tratarNumeros(numeroInicial, numeroFinal)
 
+        //Valindando o calculo
         if(validar){
+                                    
             calculo.calcularNumeros(numeroInicial, numeroFinal)
         }
 
