@@ -16,7 +16,7 @@ entradaDados.question('Informe o número fatorial: ', function (numero) {
 
     if (validar) {
         let resultado = loopFatorial.calculandoFatorial(numeroFatorial)
-        console.log('Fatorial: ' + resultado.toFixed(2))
+        console.log('Fatorial: ' + resultado.toFixed(0))
     }
 
     entradaDados.close()
